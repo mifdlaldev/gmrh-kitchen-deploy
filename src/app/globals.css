@@ -1,29 +1,151 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f5ecdf;
+  --foreground: #18212f;
+  --paper: #fffaf2;
+  --paper-strong: #ffffff;
+  --ink-soft: #556072;
+  --line: rgba(120, 96, 72, 0.14);
+  --accent: #ef6c25;
+  --accent-deep: #d85714;
+  --olive: #6f7b52;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: "Avenir Next", "Segoe UI", sans-serif;
+  --font-mono: "SFMono-Regular", "Consolas", monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-image:
+    radial-gradient(circle at 0% 0%, rgba(255, 212, 147, 0.5), transparent 24%),
+    radial-gradient(circle at 100% 0%, rgba(255, 173, 112, 0.28), transparent 20%),
+    linear-gradient(180deg, #f8f0e6 0%, #f2e7d8 42%, #efe4d5 100%);
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  text-rendering: optimizeLegibility;
 }
+
+a {
+  color: inherit;
+}
+
+::selection {
+  background: rgba(239, 108, 37, 0.18);
+}
+
 .container {
   max-width: 1200px;
+}
+
+.font-display {
+  font-family:
+    "Iowan Old Style",
+    "Palatino Linotype",
+    "Book Antiqua",
+    "Cormorant Garamond",
+    Georgia,
+    serif;
+}
+
+.surface-panel {
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 248, 239, 0.92));
+  box-shadow:
+    0 18px 40px rgba(67, 44, 17, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+
+.soft-grid {
+  background-image:
+    linear-gradient(rgba(132, 100, 67, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(132, 100, 67, 0.08) 1px, transparent 1px);
+  background-size: 36px 36px;
+}
+
+.kitchen-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(239, 108, 37, 0.18);
+  background: rgba(255, 255, 255, 0.74);
+  padding: 0.55rem 0.9rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #c24e14;
+  backdrop-filter: blur(12px);
+}
+
+.kitchen-input {
+  width: 100%;
+  border-radius: 1.2rem;
+  border: 1px solid rgba(117, 99, 83, 0.16);
+  background: rgba(255, 251, 246, 0.92);
+  padding: 0.95rem 1rem;
+  color: #1f2937;
+  outline: none;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.kitchen-input::placeholder {
+  color: #9ba5b3;
+}
+
+.kitchen-input:focus {
+  border-color: rgba(239, 108, 37, 0.42);
+  box-shadow: 0 0 0 4px rgba(239, 108, 37, 0.08);
+}
+
+.kitchen-primary-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  border-radius: 1rem;
+  background: linear-gradient(135deg, var(--accent), #ff8a3d);
+  color: white;
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    background 180ms ease;
+  box-shadow: 0 18px 35px rgba(239, 108, 37, 0.22);
+}
+
+.kitchen-primary-btn:hover {
+  transform: translateY(-1px);
+  background: linear-gradient(135deg, var(--accent-deep), var(--accent));
+}
+
+.kitchen-secondary-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(117, 99, 83, 0.16);
+  background: rgba(255, 255, 255, 0.8);
+  transition:
+    transform 180ms ease,
+    background 180ms ease,
+    border-color 180ms ease;
+}
+
+.kitchen-secondary-btn:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.96);
+  border-color: rgba(239, 108, 37, 0.18);
 }

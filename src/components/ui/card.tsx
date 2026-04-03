@@ -1,6 +1,7 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { BrandLogo } from "@/components/brand/logo";
 
 type CardProps = React.HTMLAttributes<HTMLDivElement>; 
 
@@ -92,7 +93,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
                     />
                 ) : (
                     <div className="flex h-full w-full items-center justify-center bg-gray-100">
-                        <span className="text-4xl">🍽️</span>
+                        <BrandLogo
+                            size={40}
+                            className="h-10 w-10"
+                        />
                     </div>
                 )}
                 {!isAvailable && (

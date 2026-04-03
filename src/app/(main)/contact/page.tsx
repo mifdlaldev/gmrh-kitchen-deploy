@@ -1,122 +1,106 @@
+import { Clock3, Mail, MapPin, Phone, Sparkles } from "lucide-react";
+import { ContactForm } from "@/components/contact/contact-form";
+
 export default function ContactPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="mx-auto max-w-7xl px-4 py-16">
+    <div className="relative min-h-screen overflow-hidden bg-[#f6ecdf] py-16">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,214,153,0.32),transparent_24%),radial-gradient(circle_at_bottom_right,rgba(255,174,102,0.18),transparent_22%)]" />
 
-        {/* HEADER */}
-        <div className="mb-16 text-center">
-          <h1 className="text-4xl font-bold text-gray-900">Hubungi Kami</h1>
-          <p className="mt-4 text-lg text-gray-600">
-            Ada pertanyaan? Kami siap membantu Anda
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6">
+        <div className="mb-14 text-center">
+          <div className="kitchen-badge">
+            <Sparkles className="h-4 w-4" strokeWidth={2.2} />
+            Contact kitchen
+          </div>
+          <h1 className="font-display mt-6 text-5xl font-bold leading-[0.95] text-slate-900 md:text-6xl">
+            Hubungi dapur kami dengan cara yang terasa lebih hangat.
+          </h1>
+          <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-slate-600">
+            Untuk pertanyaan, pemesanan, atau kebutuhan khusus, kirimkan pesan
+            Anda dan admin kami akan melihatnya langsung dari dashboard.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-2">
-
-          {/* LEFT INFO */}
-          <div className="space-y-10">
-
-            <div className="rounded-2xl bg-white p-8 shadow-sm border border-gray-100">
-              <h3 className="text-xl font-bold text-gray-900 mb-6">
+        <div className="grid gap-8 xl:grid-cols-[0.92fr_1.08fr]">
+          <div className="space-y-6">
+            <div className="surface-panel rounded-[2rem] p-8">
+              <h2 className="font-display text-4xl font-bold text-slate-900">
                 Informasi Kontak
-              </h3>
+              </h2>
+              <p className="mt-3 max-w-lg text-sm leading-7 text-slate-600">
+                Kami membuka jalur komunikasi yang sederhana dan cepat supaya
+                kebutuhan pelanggan tidak tertahan.
+              </p>
 
-              <div className="space-y-6 text-gray-600">
-
-                <div>
-                  <p className="font-semibold text-gray-900">Alamat</p>
-                  <p>Jl. Raya Utama No. 456, Jakarta</p>
-                </div>
-
-                <div>
-                  <p className="font-semibold text-gray-900">Telepon</p>
-                  <p>0896-7654-321</p>
-                </div>
-
-                <div>
-                  <p className="font-semibold text-gray-900">Email</p>
-                  <p>example@gmail.com</p>
-                </div>
-
-                <div>
-                  <p className="font-semibold text-gray-900">Jam Operasional</p>
-                  <p>Senin - Minggu</p>
-                  <p>08:30 - 18:00 WIB</p>
-                </div>
-
+              <div className="mt-8 space-y-4">
+                {[
+                  {
+                    icon: MapPin,
+                    title: "Alamat kitchen",
+                    value: "Sumedang, Jawa Barat",
+                  },
+                  {
+                    icon: Phone,
+                    title: "Nomor telepon",
+                    value: "+62 812-3456-7890",
+                  },
+                  {
+                    icon: Mail,
+                    title: "Alamat email",
+                    value: "support@gmrhkitchen.id",
+                  },
+                  {
+                    icon: Clock3,
+                    title: "Jam operasional",
+                    value: "Senin - Minggu • 08:30 - 18:00 WIB",
+                  },
+                ].map((item) => (
+                  <div
+                    key={item.title}
+                    className="rounded-[1.4rem] border border-[#ecdccc] bg-white/80 p-5"
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-slate-900 text-white">
+                        <item.icon className="h-5 w-5" strokeWidth={2.2} />
+                      </div>
+                      <div>
+                        <p className="text-xs font-bold uppercase tracking-[0.22em] text-slate-400">
+                          {item.title}
+                        </p>
+                        <p className="mt-2 text-base font-semibold text-slate-900">
+                          {item.value}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
 
-            {/* ABOUT */}
-            <div className="rounded-2xl bg-white p-8 shadow-sm border border-gray-100">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                Tentang Kami
-              </h2>
-
-              <p className="text-gray-600 leading-relaxed mb-4">
-                Marketplace food delivery rumahan dengan menu makanan ringan hingga makanan sedang yang lezat.
+            <div className="rounded-[2rem] bg-slate-900 p-8 text-white shadow-xl">
+              <p className="text-xs font-bold uppercase tracking-[0.24em] text-orange-200">
+                Tentang kitchen
               </p>
-
-              <p className="text-gray-600 leading-relaxed">
-                Kami menyajikan berbagai makanan khas Indonesia dengan cita rasa rumahan yang autentik.
-                Setiap pesanan diantar langsung oleh tim kami untuk memastikan makanan sampai dalam kondisi terbaik.
+              <p className="mt-5 text-lg leading-8 text-[#f4e5d7]">
+                Marketplace food delivery rumahan dengan menu ringan hingga
+                hidangan utama yang dibuat lebih rapi, lebih modern, dan tetap
+                dekat dengan selera lokal.
               </p>
             </div>
-
           </div>
 
-          {/* RIGHT FORM */}
-          <div className="rounded-2xl border border-gray-100 bg-white p-10 shadow-lg">
-
-            <h2 className="text-2xl font-bold text-gray-900 mb-8">
+          <div className="surface-panel rounded-[2rem] p-6 md:p-8">
+            <h2 className="font-display text-4xl font-bold text-slate-900">
               Kirim Pesan
             </h2>
-
-            <form className="space-y-6">
-
-              <div>
-                <label className="block text-sm font-semibold text-gray-900 mb-2">
-                  Nama
-                </label>
-                <input
-                  type="text"
-                  placeholder="Masukkan nama anda"
-                  className="w-full rounded-xl border border-gray-200 bg-gray-50 px-5 py-4 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-gray-900 mb-2">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  placeholder="Masukkan email anda"
-                  className="w-full rounded-xl border border-gray-200 bg-gray-50 px-5 py-4 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-gray-900 mb-2">
-                  Pesan
-                </label>
-                <textarea
-                  rows={6}
-                  placeholder="Tulis pesan anda..."
-                  className="w-full rounded-xl border border-gray-200 bg-gray-50 px-5 py-4 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100"
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="w-full rounded-xl bg-orange-500 py-4 text-lg font-bold text-white transition hover:bg-orange-600"
-              >
-                Kirim Pesan
-              </button>
-
-            </form>
+            <p className="mt-3 text-sm leading-7 text-slate-600">
+              Isi detail singkat Anda, lalu pesan akan langsung masuk ke panel
+              admin.
+            </p>
+            <div className="mt-8">
+              <ContactForm />
+            </div>
           </div>
-
         </div>
       </div>
     </div>

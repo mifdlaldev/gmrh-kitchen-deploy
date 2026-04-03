@@ -1,15 +1,20 @@
 "use client";
 
 import { createClient } from "@/lib/supabase/client";
+import { hasSupabaseEnv } from "@/lib/supabase/env";
 import type { User } from "@/types";
 import { useEffect, useState } from "react";
 
 export function useUser() {
     const [user, setUser] = useState<User | null>(null);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(hasSupabaseEnv());
 
     useEffect(() => {
         const supabase = createClient();
+
+        if (!supabase) {
+            return;
+        }
 
         // Get initial user
         const getUser = async () => {
@@ -25,7 +30,9 @@ export function useUser() {
                     .eq("id", authUser.id)
                     .single();
 
-                setUser(profile);
+                setUser(profile ?? null);
+            } else {
+                setUser(null);
             }
             setLoading(false);
         };

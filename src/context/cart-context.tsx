@@ -12,30 +12,42 @@ type CartItem = {
 
 type CartContextType = {
   cart: CartItem[]
+  isHydrated: boolean
   addToCart: (item: Omit<CartItem, "quantity">) => void
   removeFromCart: (id: string) => void
   increaseQty: (id: string) => void
   decreaseQty: (id: string) => void
+  clearCart: () => void
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined)
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
+  const [cart, setCart] = useState<CartItem[]>([])
+  const [isHydrated, setIsHydrated] = useState(false)
 
-  // ✅ Load cart from localStorage safely
-  const [cart, setCart] = useState<CartItem[]>(() => {
-
-    if (typeof window === "undefined") return []
-
+  useEffect(() => {
     const saved = localStorage.getItem("cart")
+    const nextCart = saved ? JSON.parse(saved) : []
 
-    return saved ? JSON.parse(saved) : []
-  })
+    const timeoutId = window.setTimeout(() => {
+      setCart(nextCart)
+      setIsHydrated(true)
+    }, 0)
+
+    return () => {
+      window.clearTimeout(timeoutId)
+    }
+  }, [])
 
   // ✅ Save cart
   useEffect(() => {
+    if (!isHydrated) {
+      return
+    }
+
     localStorage.setItem("cart", JSON.stringify(cart))
-  }, [cart])
+  }, [cart, isHydrated])
 
   const addToCart = (item: Omit<CartItem, "quantity">) => {
 
@@ -83,14 +95,20 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     )
   }
 
+  const clearCart = () => {
+    setCart([])
+  }
+
   return (
     <CartContext.Provider
       value={{
         cart,
+        isHydrated,
         addToCart,
         removeFromCart,
         increaseQty,
-        decreaseQty
+        decreaseQty,
+        clearCart
       }}
     >
       {children}

@@ -4,10 +4,10 @@ import { Features } from "@/components/home/features";
 
 export default function HomePage() {
   return (
-    <>
+    <main className="bg-[#f6ecdf]">
       <Hero />
       <MenuPreview />
       <Features />
-    </>
+    </main>
   );
 }
