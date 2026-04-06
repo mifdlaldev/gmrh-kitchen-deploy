@@ -23,8 +23,10 @@ import {
   getOrderStatusLabel,
   isFinalOrderStatus,
   mapOrdersErrorMessage,
+  orderStatusOptions,
   type OrderItemRecord,
   type OrderRecord,
+  type OrderStatus,
 } from "@/lib/orders";
 
 function formatSyncLabel(date: Date | null) {
@@ -56,6 +58,9 @@ export default function OrdersPage() {
   const [errorMessage, setErrorMessage] = useState("");
   const [actionMessage, setActionMessage] = useState("");
   const [updatingOrderId, setUpdatingOrderId] = useState<string | null>(null);
+  const [selectedStatuses, setSelectedStatuses] = useState<
+    Record<string, OrderStatus>
+  >({});
 
   const loadOrders = useCallback(async (silent = false) => {
     if (requestInFlight.current) {
@@ -159,6 +164,20 @@ export default function OrdersPage() {
   useEffect(() => {
     void loadOrders();
   }, [loadOrders]);
+
+  useEffect(() => {
+    const next: Record<string, OrderStatus> = {};
+
+    for (const order of orders) {
+      next[order.id] = orderStatusOptions.some(
+        (option) => option.value === order.status,
+      )
+        ? (order.status as OrderStatus)
+        : "pending";
+    }
+
+    setSelectedStatuses(next);
+  }, [orders]);
 
   useEffect(() => {
     const supabase = createClient();
@@ -482,6 +501,12 @@ export default function OrdersPage() {
                 (sum, item) => sum + item.quantity,
                 0,
               );
+              const selectedStatus = selectedStatuses[order.id] ?? "pending";
+              const hasManualStatusChange = selectedStatus !== order.status;
+              const selectedStatusMeta =
+                orderStatusOptions.find(
+                  (option) => option.value === selectedStatus,
+                ) ?? orderStatusOptions[0];
 
               return (
                 <article
@@ -650,7 +675,57 @@ export default function OrdersPage() {
                                 : primaryAction.label}
                             </button>
                           )}
+                        </div>
 
+                        <div className="mt-4 rounded-[1.3rem] border border-white/10 bg-white/5 p-4">
+                          <label
+                            htmlFor={`order-status-${order.id}`}
+                            className="text-xs font-bold uppercase tracking-[0.18em] text-orange-200"
+                          >
+                            Ubah status manual
+                          </label>
+                          <div className="mt-3 flex flex-col gap-3">
+                            <select
+                              id={`order-status-${order.id}`}
+                              value={selectedStatus}
+                              onChange={(event) => {
+                                const nextStatus = event.target
+                                  .value as OrderStatus;
+
+                                setSelectedStatuses((current) => ({
+                                  ...current,
+                                  [order.id]: nextStatus,
+                                }));
+                              }}
+                              disabled={isUpdating}
+                              className="rounded-2xl border border-white/10 bg-slate-950/70 px-4 py-3 text-sm text-white outline-none transition focus:border-orange-300 disabled:cursor-not-allowed disabled:opacity-60"
+                            >
+                              {orderStatusOptions.map((option) => (
+                                <option
+                                  key={option.value}
+                                  value={option.value}
+                                  className="bg-slate-950 text-white"
+                                >
+                                  {option.label}
+                                </option>
+                              ))}
+                            </select>
+
+                            <p className="text-xs leading-6 text-slate-300">
+                              {selectedStatusMeta.description}
+                            </p>
+
+                            <button
+                              type="button"
+                              onClick={() =>
+                                updateOrderStatus(order.id, selectedStatus)
+                              }
+                              disabled={isUpdating || !hasManualStatusChange}
+                              className="inline-flex items-center justify-center rounded-full border border-orange-300/30 bg-orange-500/15 px-4 py-2 text-sm font-semibold text-orange-100 transition hover:bg-orange-500/25 disabled:cursor-not-allowed disabled:opacity-50"
+                            >
+                              {isUpdating ? "Menyimpan..." : "Simpan status"}
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </aside>
