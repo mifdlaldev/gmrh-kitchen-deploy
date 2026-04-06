@@ -34,6 +34,43 @@ export type OrderStatus =
   | "delivered"
   | "cancelled";
 
+export const orderStatusOptions: Array<{
+  value: OrderStatus;
+  label: string;
+  description: string;
+}> = [
+  {
+    value: "pending",
+    label: "Menunggu",
+    description: "Order baru masuk dan masih menunggu pembayaran.",
+  },
+  {
+    value: "confirmed",
+    label: "Lunas",
+    description: "Pembayaran terverifikasi dan order siap masuk proses dapur.",
+  },
+  {
+    value: "preparing",
+    label: "Diproses",
+    description: "Pesanan sedang disiapkan oleh tim dapur.",
+  },
+  {
+    value: "ready",
+    label: "Siap kirim",
+    description: "Pesanan sudah siap diantar ke pelanggan.",
+  },
+  {
+    value: "delivered",
+    label: "Selesai",
+    description: "Pesanan telah diterima pelanggan dan proses selesai.",
+  },
+  {
+    value: "cancelled",
+    label: "Dibatalkan",
+    description: "Pesanan dibatalkan dan tidak dilanjutkan.",
+  },
+];
+
 type AdminOrderAction = {
   label: string;
   nextStatus: OrderStatus;
