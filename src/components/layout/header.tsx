@@ -109,18 +109,20 @@ export function Header() {
           </nav>
 
           <div className="flex items-center gap-3">
-            <Link
-              href="/cart"
-              className="relative flex h-12 w-12 items-center justify-center rounded-2xl border border-[#ead8c3] bg-white text-slate-700 transition hover:-translate-y-0.5 hover:text-orange-500"
-            >
-              <ShoppingBag className="h-5 w-5" strokeWidth={2.2} />
+            {authUser && (
+              <Link
+                href="/cart"
+                className="relative flex h-12 w-12 items-center justify-center rounded-2xl border border-[#ead8c3] bg-white text-slate-700 transition hover:-translate-y-0.5 hover:text-orange-500"
+              >
+                <ShoppingBag className="h-5 w-5" strokeWidth={2.2} />
 
-              {isHydrated && totalItems > 0 && (
-                <span className="absolute -right-1.5 -top-1.5 flex h-6 min-w-6 items-center justify-center rounded-full bg-orange-500 px-1.5 text-[11px] font-bold text-white">
-                  {totalItems}
-                </span>
-              )}
-            </Link>
+                {isHydrated && totalItems > 0 && (
+                  <span className="absolute -right-1.5 -top-1.5 flex h-6 min-w-6 items-center justify-center rounded-full bg-orange-500 px-1.5 text-[11px] font-bold text-white">
+                    {totalItems}
+                  </span>
+                )}
+              </Link>
+            )}
 
             {isSupabaseReady && authUser ? (
               <button
