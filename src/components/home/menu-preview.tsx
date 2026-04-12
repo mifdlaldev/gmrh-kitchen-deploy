@@ -45,8 +45,8 @@ export function MenuPreview() {
 
       <div className="container mx-auto px-6">
 
-        <div className="mb-14 grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
-          <div>
+        <div className="mb-14 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+          <div className="flex-1">
             <div className="inline-flex items-center gap-2 rounded-full border border-orange-200 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-orange-700">
               <FolderHeart className="h-4 w-4" strokeWidth={2.2} />
               Pilihan Favorit
@@ -63,7 +63,7 @@ export function MenuPreview() {
             </p>
           </div>
 
-          <div className="rounded-[1.75rem] border border-orange-100 bg-white/80 p-5 shadow-sm">
+          <div className="w-full rounded-[1.75rem] border border-orange-100 bg-white/80 p-5 shadow-sm lg:max-w-sm">
             <div className="flex items-start gap-3">
               <div className="mt-1 flex h-10 w-10 items-center justify-center rounded-2xl bg-orange-100 text-orange-600">
                 <Sparkles className="h-5 w-5" strokeWidth={2.2} />

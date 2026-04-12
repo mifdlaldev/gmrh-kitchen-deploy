@@ -17,6 +17,7 @@ export default function ProductsPage(){
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [deletingProduct, setDeletingProduct] = useState<Product | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
 
   const fetchProducts = async () => {
     const supabase = createClient();
@@ -56,11 +57,22 @@ export default function ProductsPage(){
     }
 
     setIsDeleting(true);
+    setDeleteError(null);
 
-    await supabase
+    const { error } = await supabase
       .from("products")
       .delete()
       .eq("id",id);
+
+    if (error) {
+      if (error.code === '23503') {
+        setDeleteError("Gagal: Produk ini sudah pernah dipesan oleh pelanggan sehingga tidak dapat dihapus dari sistem.");
+      } else {
+        setDeleteError("Gagal menghapus: " + error.message);
+      }
+      setIsDeleting(false);
+      return;
+    }
 
     await fetchProducts();
     setDeletingProduct(null);
@@ -253,6 +265,12 @@ export default function ProductsPage(){
                 Produk <span className="font-semibold text-gray-900">{deletingProduct.name}</span> akan dihapus dari daftar. Tindakan ini tidak bisa dibatalkan.
               </p>
             </div>
+
+            {deleteError && (
+              <div className="mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                {deleteError}
+              </div>
+            )}
 
             <div className="flex justify-end gap-3">
               <button
